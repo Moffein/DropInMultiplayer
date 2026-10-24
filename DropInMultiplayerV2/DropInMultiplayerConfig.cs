@@ -1,7 +1,5 @@
 ﻿using BepInEx.Configuration;
-using System;
-using BepInEx;
-using System.Linq;
+using UnityEngine;
 
 namespace DropInMultiplayer
 {
@@ -52,6 +50,12 @@ namespace DropInMultiplayer
             SendWelcomeMessage = config.Bind("Chat Messages", "SendWelcomeMessage", true, "Sends the welcome message when a new player joins.");
             CustomWelcomeMessage = config.Bind("Chat Messages", "CustomWelcomeMessage", DefaultWelcomeMessage,
                 "Format of welcome message. {username} will be replaced with joining users name, and {survivorlist} will be replaced by list of availible survivors.");
+
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Moffein.Heretic"))
+            {
+                GiveHereticItems.Value = false;
+                Debug.LogWarning("DropInMultiplayer: Standalone Heretic Mod detected, GiveHereticItems option will be disabled.");
+            }
         }
     }
 }
